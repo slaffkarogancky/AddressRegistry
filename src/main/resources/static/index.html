@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Адресный реестр г. Харькова</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
+
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	background-image: url(./images/bg.png);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+#addressko {
+	margin-left: 200px;
+	margin-top: 120px;
+}
+
+#inputko {
+	min-width: 500px;
+}
+
+.btn {
+	min-width: 90px;
+	margin-left: 7px;
+}
+
+#resultko {
+	margin-left: 205px;
+	margin-top: 15px;
+}
+
+#big-titleko {
+	margin-bottom: 5px;
+	font-size: large;
+	font-weight: bold;
+}
+
+#not-found {
+	color: red;
+}
+
+.contentko-row{
+	margin-left: 25px;
+	margin-bottom: 3px;
+}
+
+.former {
+	font-size: small;
+	font-style : italic;
+}
+
+</style>
+</head>
+<body>
+	<form class="form-inline" role="form">
+		<div class="form-group" id="addressko">
+			<input type="text" class="form-control" id="inputko"
+				placeholder="Введите адрес (можно частично или приблизительно)" autocomplete="off">
+			<button type="button" id="find" class="btn btn-info">Поиск</button>
+			<button type="button" id="clear" class="btn btn-info">Очистить</button>
+		</div>
+	</form>
+	<div id="resultko">
+	<div id = "big-titleko"> <span id="titleko"></span><span id="not-found"> </span></div>
+	<div id= contentko>
+	</div>
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+		integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+		integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+	<script>
+
+	// отображает результаты поиска в нижней панели	
+	function _showSearchResult(data) {
+			_clearResultContent();
+			if (!(data === "ERROR")) {				
+				// выводим заголовок результата
+				var titleko = 'Результаты поиска по "' + data.initialStr + '"';
+				if (data.maybeStr) {
+					titleko += (' (возможно Вы имели в виду "' + data.maybeStr + '")');
+				}
+				titleko += ': ';
+				$('#titleko').text(titleko);
+				
+				if (data.streets.length == 0) {
+					$('#not-found').text(" совпадения не найдены!");
+				} else {
+					// выводим список совпавших адресов
+					data.streets.forEach(function(street) {
+						var desc = street.nameRus + " (" + street.nameUkr
+								+ ") " + street.typeRus;
+						if (street.formerNameRus) {
+							var adt = '<span class="former">   (бывш. '
+									+ street.formerNameRus + " ("
+									+ street.formerNameUkr + ") "
+									+ street.formerTypeRus + ")</span>";
+							desc += adt;
+						}
+						if (street.houses.length > 0) {
+							desc += (" : " + street.houses[0]);
+						}
+						for(var i=1; i < street.houses.length; i++){
+							desc += (", " + street.houses[i]);
+						}
+						
+						$('#contentko').append('<div class="contentko-row">' + desc + '</div>');
+					});
+				}
+			}
+		}
+
+		// очищает панель результата
+		function _clearResultContent() {
+			$('#titleko').text("");
+			$('#not-found').text("");
+			$('#contentko').html("");
+		}
+		
+		// делает запрос на сервер на поиск улиц
+		function _searchStreet(){
+			var sample = $('#inputko').val();
+			if (sample.length >= 3) {
+				_clearResultContent();
+				$.get(
+						'http://localhost:2020/illegible-address/api/v1/findstreet?substr='
+								+ sample, _showSearchResult);
+			}
+		}
+
+		$(function() {
+
+			$('#find').prop('disabled', true);
+			$('#inputko').focus();
+
+			$('#inputko').on('input', function(e) {
+				var sample = $('#inputko').val();
+				$('#find').prop('disabled', sample.length < 3);
+			});
+
+			$('#clear').on('click', function() {
+				_clearResultContent();
+				$('#inputko').val('');
+				$('#find').prop('disabled', true);
+			});
+
+			$('#find').on( 'click',	_searchStreet);
+			
+			$('#inputko').keypress(function (e) {
+				  if (e.which == 13) {
+				    _searchStreet();
+				    return false;   
+				  }
+				});
+
+		});
+	</script>
+</body>
+</html>

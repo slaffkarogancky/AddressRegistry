@@ -42,6 +42,72 @@ public class Street {
 	public String toString() {
 		return "Street [id=" + id + ", rusName=" + rusName + ", rusType=" + rusType + "]";
 	}
+
+	
+	// Getters & Setters
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(Integer isValid) {
+		this.isValid = isValid;
+	}
+
+	public String getRusName() {
+		return rusName;
+	}
+
+	public void setRusName(String rusName) {
+		this.rusName = rusName;
+	}
+
+	public String getRusType() {
+		return rusType;
+	}
+
+	public void setRusType(String rusType) {
+		this.rusType = rusType;
+	}
+
+	public String getUkrName() {
+		return ukrName;
+	}
+
+	public void setUkrName(String ukrName) {
+		this.ukrName = ukrName;
+	}
+
+	public String getUkrType() {
+		return ukrType;
+	}
+
+	public void setUkrType(String ukrType) {
+		this.ukrType = ukrType;
+	}
+
+	public Integer getPreviousId() {
+		return previousId;
+	}
+
+	public void setPreviousId(Integer previousId) {
+		this.previousId = previousId;
+	}
+
+	public Integer getPreviousAnotherId() {
+		return previousAnotherId;
+	}
+
+	public void setPreviousAnotherId(Integer previousAnotherId) {
+		this.previousAnotherId = previousAnotherId;
+	}
 	
 
 }

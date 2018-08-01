@@ -15,9 +15,12 @@ public class UsefulUtils {
 	}
 	
 	public static String checkTypos(String source) {
+		if (source == null) {
+			return null;
+		}
 		String result = source;
-		char[] canbe = "qwertyuiopasdfghjklzxcvbnm".toCharArray();
-		char[] mustbe = "йцукенгшщзфывапролдячсмить".toCharArray();
+		char[] canbe = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM".toCharArray();
+		char[] mustbe = "йцукенгшщзфывапролдячсмитьЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ".toCharArray();
 		for(int i = 0; i < canbe.length; i++) {
 			result = result.replace(canbe[i], mustbe[i]);
 		}

@@ -13,7 +13,7 @@ public class UsefulUtilsTest {
 	
 	@Test
 	public void testOne() {
-		System.out.println(UsefulUtils.checkTypos("великийхан[];'./"));
+		System.out.println(UsefulUtils.checkTypos("	rDBNRF[];'./"));
 		System.out.println(UsefulUtils.checkTypos("dtkbrbq[fyхъжэю."));
 	}
 	

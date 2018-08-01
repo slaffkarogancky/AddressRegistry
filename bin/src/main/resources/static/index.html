@@ -16,7 +16,7 @@ html, body {
 }
 
 body {
-	background-image: url(./images/bggg.png);
+	background-image: url(./images/bg.png);
 	background-repeat: no-repeat;
 	background-position: bottom right;
 }
@@ -146,7 +146,7 @@ body {
 			if (sample.length >= 3) {
 				_clearResultContent();
 				$.get(
-						'http://10.0.0.22:2020/illegible-address/api/v1/findstreet?substr='
+						'http://localhost:2020/illegible-address/api/v1/findstreet?substr='
 								+ sample, _showSearchResult);
 			}
 		}

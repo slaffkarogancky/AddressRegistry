@@ -54,6 +54,76 @@ public class StreetInfo {
 	private static boolean isPartValid(String part) {
 		part = UsefulUtils.trim(part.trim(), ".");	
 		return (part.length() > 1) && (!(part.equals("ст") || part.equals("пос") || part.equals("сел") || part.equals("пгт")));
-	}	
+	}
+
+	
+	// Getters & Setters
+	public StreetInfo getSuccessor() {
+		return successor;
+	}
+
+	public void setSuccessor(StreetInfo successor) {
+		this.successor = successor;
+	}
+
+	public Set<String> getAdresses() {
+		return adresses;
+	}
+
+	public void setAdresses(Set<String> adresses) {
+		this.adresses = adresses;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getPreviousId() {
+		return previousId;
+	}
+
+	public int getPreviousAnotherId() {
+		return previousAnotherId;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public String getRusName() {
+		return rusName;
+	}
+
+	public String getUkrName() {
+		return ukrName;
+	}
+
+	public String getRusType() {
+		return rusType;
+	}
+
+	public String getUkrType() {
+		return ukrType;
+	}
+
+	public String[] getRusParts() {
+		return rusParts;
+	}
+
+	public String[] getUkrParts() {
+		return ukrParts;
+	}
+
+	public String[] getAllParts() {
+		return allParts;
+	}
+
+	public String getFirstRusLetter() {
+		return firstRusLetter;
+	}
+
+	public String getFirstUkrLetter() {
+		return firstUkrLetter;
+	}		
 }
 

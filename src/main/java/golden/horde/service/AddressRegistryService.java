@@ -54,11 +54,11 @@ public class AddressRegistryService {
 		}
 	}
 	
-	public String findMatches(String sourceSample) {
-		String sample = UsefulUtils.checkTypos(sourceSample);
-		String maybeSample = sample.equals(sourceSample) ? "" : sample;
-		String empty = _serializeToJson(new AddressSearchResult(sourceSample, maybeSample, Collections.emptyList()));
+	public String findMatches(String sourceSample) {		
 		try {
+			String sample = UsefulUtils.checkTypos(sourceSample);
+			String maybeSample = sample.equals(sourceSample) ? "" : sample;
+			String empty = _serializeToJson(new AddressSearchResult(sourceSample, maybeSample, Collections.emptyList()));
 			// парсим входную строку, выделяем улицы и дома
 			List<String> streetSamples = new ArrayList<>();
 			List<String> housesSamples = new ArrayList<>();
